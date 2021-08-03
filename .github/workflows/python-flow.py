@@ -3,17 +3,15 @@ name: Python Workflow Demo
 on: [push]
 
 jobs:
-  Build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Building the Code
-        run: echo "Building the Code"
-      - name: Wait for the Code Building
-        run: sleep 30
-
   Execute:
     runs-on: ubuntu-latest
-    needs: Build
     steps:
+      - uses: actions/checkout@v2
+      - name: Python Version
+        run: python -V
+      - name: Identifying the Folder
+        run: pwd
+      - name: List the files in current directory
+        run: ls ${{github.workspace}}
       - name: Run Python File
-        run: python hello.py
+        run: python ../devsecops-cgi/hello.py
