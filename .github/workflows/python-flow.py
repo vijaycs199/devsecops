@@ -1,4 +1,4 @@
-name:Python Workflow Demo
+name: Python Workflow Demo
 
 on: [push]
 
@@ -14,4 +14,4 @@ jobs:
       - name: List the files in current directory
         run: ls ${{github.workspace}}
       - name: Run Python File
-        run: python ../devsecops-cgi/hello.py
+        run: python ../devsecops/hello.py
