@@ -1,27 +1,28 @@
-name: Variables Workflow
-
-#on:
-#  schedule:
-#    - cron: "0/5 * * * *"
-
-on:
-  push:
-    branches:
-      - main
-    paths:
-      "|index.html"
-
+name: Conditional Jobs Workflow
+on: [push]
 jobs: 
-  run-github-actions: 
+  build: 
     runs-on: ubuntu-latest
     steps:
-      - name: List Files 
+      - name: Build Steps
         run: |
-          pwd
-          ls -a
-          echo $GITHUB_SHA
-          echo $GITHUB_REPOSITORY
-          echo $GITHUB_WORKSPACE
-          echo "${{ github.token }}"
-          # git clone git@github:$GITHUB_REPOSITORY
-          # git checkout $GITHUB_SHA
+          echo "Build Job Getting Executed"
+          ls building.txt
+  testing: 
+    runs-on: ubuntu-latest
+    if: always()
+    needs: build
+    steps:
+      - name: Testing Steps
+        run: |
+          echo "Testing Job Getting Executed"
+          sleep 10
+  deployment: 
+    runs-on: ubuntu-latest
+    if: always()
+    needs: [build, testing]
+    steps:
+      - name: Deployment Steps
+        run: |
+          echo "Deployment Job Getting Executed"
+          sleep 10
