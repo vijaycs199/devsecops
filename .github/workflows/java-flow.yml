@@ -1,17 +1,19 @@
-name: execute java file
-  
+name: Java Workflow Demo
+
 on: [push]
 
 jobs:
-  Execute: 
+  BuildJava:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: python version check
-        run: python -V
-      - name: Identifying the folder
-        run: pwd
-      - name: list the files from current directory
-        run: ls ${github.workspace}
-      - name: Run java file
-        run: javac ../devsecops/hello.java
+      - name: List the files in current directory
+        run: ls ${{github.workspace}}
+      - name: Verify the Java Version
+        run: java --version
+      - name: Compile the Java Program
+        run: javac hello.java
+      - name: Verify Java Compiled or Not
+        run: ls ${{github.workspace}}
+      - name: Execute the Java Code
+        run: java HelloWorld
